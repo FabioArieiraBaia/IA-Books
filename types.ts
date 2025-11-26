@@ -1,5 +1,7 @@
 export type Language = 'pt-BR' | 'en-US';
 
+export type AppView = 'HOME' | 'LIBRARY' | 'READER';
+
 export interface BookConfig {
   topic: string;
   audience: string;
@@ -23,6 +25,9 @@ export interface Chapter {
 }
 
 export interface Book {
+  id?: string; // Gerado ao publicar
+  publishedAt?: string;
+  likes?: number;
   title: string;
   subtitle: string;
   config: BookConfig;

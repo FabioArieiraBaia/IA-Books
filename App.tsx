@@ -4,14 +4,19 @@ import { OutlineEditor } from './components/OutlineEditor';
 import { GeneratorView } from './components/GeneratorView';
 import { BookPreview } from './components/BookPreview';
 import { IntroAnimation } from './components/IntroAnimation';
-import { AppStep, Book, BookConfig, Chapter, GenerationStatus, Language } from './types';
+import { Library } from './components/Library';
+import { Reader } from './components/Reader';
+import { AppStep, Book, BookConfig, Chapter, GenerationStatus, Language, AppView } from './types';
 import { generateBookOutline, generateSectionContent, generateSectionImage } from './services/geminiService';
-import { Book as BookIcon, Globe } from 'lucide-react';
+import { Book as BookIcon, Globe, Library as LibIcon } from 'lucide-react';
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [view, setView] = useState<AppView>('HOME'); // Navegação Principal
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+
   const [language, setLanguage] = useState<Language>('pt-BR');
-  const [step, setStep] = useState<AppStep>(AppStep.ONBOARDING);
+  const [step, setStep] = useState<AppStep>(AppStep.ONBOARDING); // Etapas da Criação
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState<Book | null>(null);
   
@@ -30,7 +35,24 @@ export default function App() {
     }));
   };
 
-  // Step 1: Config & Outline
+  // --- Funções de Navegação ---
+  
+  const goHome = () => {
+    setView('HOME');
+    setSelectedBookId(null);
+  };
+
+  const goLibrary = () => {
+    setView('LIBRARY');
+  };
+
+  const openReader = (id: string) => {
+    setSelectedBookId(id);
+    setView('READER');
+  };
+
+  // --- Lógica de Geração (Existente) ---
+
   const handleConfigComplete = async (config: BookConfig) => {
     setLoading(true);
     try {
@@ -51,24 +73,19 @@ export default function App() {
     }
   };
 
-  // Step 2: Start Granular Generation
   const handleOutlineConfirm = async (chapters: Chapter[]) => {
     if (!book) return;
-    
     const updatedBook = { ...book, chapters };
     setBook(updatedBook);
     setStep(AppStep.GENERATION);
-    
     await generateFullBookGranular(updatedBook);
   };
 
-  // Step 3: Granular Generation Logic
   const generateFullBookGranular = async (currentBook: Book) => {
     const totalSections = currentBook.chapters.reduce((acc, ch) => acc + ch.sections.length, 0);
     const totalOps = totalSections * 2;
     let completedOps = 0;
-
-    const newBook = JSON.parse(JSON.stringify(currentBook)) as Book; // Deep copy
+    const newBook = JSON.parse(JSON.stringify(currentBook)) as Book;
 
     addLog("> Initializing IA Books Core...");
     addLog(`> Targeted Structure: ${newBook.chapters.length} Chapters, ${totalSections} Sections.`);
@@ -79,7 +96,6 @@ export default function App() {
 
       for (let sIdx = 0; sIdx < chapter.sections.length; sIdx++) {
         const section = chapter.sections[sIdx];
-        
         setStatus(prev => ({
             ...prev,
             currentChapterTitle: chapter.title,
@@ -88,15 +104,12 @@ export default function App() {
             progress: (completedOps / totalOps) * 100
         }));
 
-        // 1. Generate Text
         addLog(`  > Drafting section: "${section.title}"...`);
         const content = await generateSectionContent(section, chapter, newBook.title, newBook.config);
         newBook.chapters[cIdx].sections[sIdx].content = content;
         setBook({ ...newBook }); 
-        
         completedOps++;
         
-        // 2. Generate Image
         setStatus(prev => ({ ...prev, activity: 'painting', progress: (completedOps / totalOps) * 100 }));
         addLog(`  > Rendering illustration: ${section.visualConcept.substring(0, 30)}...`);
         const imageUrl = await generateSectionImage(section);
@@ -108,7 +121,6 @@ export default function App() {
             addLog(`  ! Image generation skipped/failed.`);
         }
         setBook({ ...newBook });
-
         completedOps++;
         await new Promise(r => setTimeout(r, 500));
       }
@@ -116,7 +128,6 @@ export default function App() {
 
     addLog("> Compilation finished.");
     addLog("> Finalizing formatting...");
-    
     setStatus(prev => ({ ...prev, activity: 'finished', progress: 100 }));
     
     setTimeout(() => {
@@ -128,29 +139,44 @@ export default function App() {
   const handleReset = () => {
     setStep(AppStep.ONBOARDING);
     setBook(null);
-    setStatus({ 
-        currentChapterTitle: null, 
-        currentSectionTitle: null, 
-        activity: 'thinking', 
-        logs: [], 
-        progress: 0 
-    });
+    setStatus({ currentChapterTitle: null, currentSectionTitle: null, activity: 'thinking', logs: [], progress: 0 });
   };
+
+  // --- RENDER ---
 
   if (showIntro) {
     return <IntroAnimation onComplete={() => setShowIntro(false)} />;
   }
 
+  // View: LEITOR PÚBLICO
+  if (view === 'READER' && selectedBookId) {
+    return <Reader bookId={selectedBookId} onBack={goLibrary} />;
+  }
+
+  // View: BIBLIOTECA
+  if (view === 'LIBRARY') {
+    return <Library onSelectBook={openReader} onBack={goHome} />;
+  }
+
+  // View: HOME (CRIAÇÃO)
   return (
     <div className="h-screen w-screen flex flex-col bg-slate-50 overflow-hidden font-sans">
-      {/* Navbar - Only on Onboarding/Outline */}
+      {/* Navbar de Criação */}
       {(step === AppStep.ONBOARDING || step === AppStep.OUTLINE) && (
         <nav className="h-16 bg-white border-b border-gray-200 flex items-center px-8 justify-between flex-shrink-0">
-          <div className="flex items-center gap-2 text-indigo-900">
+          <div className="flex items-center gap-2 text-indigo-900 cursor-pointer" onClick={goHome}>
             <BookIcon size={24} strokeWidth={2.5} />
             <span className="font-serif font-black text-xl tracking-tight">IA BOOKS</span>
           </div>
           <div className="flex items-center gap-4">
+             {/* Botão para ir para Biblioteca */}
+            <button onClick={goLibrary} className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors font-medium">
+                <LibIcon size={18} />
+                <span className="hidden sm:inline">Biblioteca</span>
+            </button>
+
+            <div className="h-6 w-px bg-gray-200"></div>
+
             <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:bg-gray-200 transition-colors"
                  onClick={() => setLanguage(l => l === 'pt-BR' ? 'en-US' : 'pt-BR')}>
                 <Globe size={14} className="text-gray-500" />
