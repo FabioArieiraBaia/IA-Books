@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IA Books - iabooks.com.br</title>
+    <!-- UPDATED: Added plugins=typography to enable prose classes -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Merriweather', 'serif'],
+            },
+            colors: {
+              paper: '#fdfbf7',
+              ink: '#2d2a26',
+            },
+            typography: {
+              DEFAULT: {
+                css: {
+                  maxWidth: '100ch', // Prevent text from being too narrow
+                },
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Fallback styles in case Tailwind prose fails */
+      .prose p {
+          margin-bottom: 1.5em;
+          color: #374151; /* gray-700 */
+      }
+      .prose h3 {
+          font-size: 1.5em;
+          font-weight: bold;
+          margin-top: 1.5em;
+          margin-bottom: 0.75em;
+          color: #2d2a26;
+      }
+      .prose ul {
+          list-style-type: disc;
+          padding-left: 1.5em;
+          margin-bottom: 1.5em;
+      }
+
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+      
+      @media print {
+        @page {
+          margin: 0; /* Let individual pages handle margins */
+          size: A4;
+        }
+        body {
+          background-color: white;
+          color: black;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .no-print {
+          display: none !important;
+        }
+        .page-break {
+          page-break-before: always;
+          min-height: 100vh;
+        }
+        .print-content {
+          display: block !important;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 text-slate-900 antialiased h-screen overflow-hidden">
+    <div id="root" class="h-full"></div>
+  </body>
+</html>
