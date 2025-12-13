@@ -1,0 +1,35 @@
+<?php
+// Permite acesso de qualquer origem (CORS)
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json; charset=UTF-8");
+
+$dir = 'ebooks/';
+$books = [];
+
+// Verifica se a pasta existe
+if (is_dir($dir)) {
+    // Pega todos os arquivos .json da pasta
+    $files = glob($dir . '*.json');
+    
+    // Ordena pelos mais recentes (pela data de modificação do arquivo)
+    usort($files, function($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+
+    foreach ($files as $file) {
+        $content = file_get_contents($file);
+        if ($content !== false) {
+            $book = json_decode($content, true);
+            if ($book) {
+                // Adiciona à lista
+                $books[] = $book;
+            }
+        }
+    }
+} else {
+    // Se a pasta não existir, retorna array vazio (não é erro, só não tem livros ainda)
+}
+
+echo json_encode($books, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+?>

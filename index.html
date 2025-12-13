@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#141414">
+    
+    <!-- PERFORMANCE: Preconnect to critical domains (LCP Optimization) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    
+    <!-- Primary Meta Tags (Default Fallbacks) -->
+    <title>iabooks | A Maior Biblioteca de IA do Mundo</title>
+    <meta name="title" content="iabooks | Crie seu legado com Inteligência Artificial">
+    <meta name="description" content="Plataforma gratuita para geração de livros com IA. Leia obras originais criadas pela comunidade e publique seu legado.">
+    <meta name="keywords" content="ia, ebook, inteligência artificial, escrever livro, gemini, iabooks, biblioteca digital, criador de ebook">
+    <meta name="author" content="iabooks Community">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <!-- PWA & Favicons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+    <link rel="apple-touch-icon" href="/assets/logo.svg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Open Graph / Facebook (Dynamic Content handled by SEO.tsx) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iabooks.com.br/">
+    <meta property="og:title" content="iabooks | Biblioteca Global de IA">
+    <meta property="og:description" content="Junte-se à revolução literária. Crie e leia livros gerados por inteligência artificial.">
+    <meta property="og:image" content="https://iabooks.com.br/assets/logo.svg">
+    <meta property="og:site_name" content="iabooks">
+    <meta property="og:locale" content="pt_BR">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://iabooks.com.br/">
+    <meta property="twitter:title" content="iabooks">
+    <meta property="twitter:description" content="Plataforma gratuita para geração de livros com IA.">
+    <meta property="twitter:image" content="https://iabooks.com.br/assets/logo.svg">
+
+    <link rel="canonical" href="https://iabooks.com.br/" />
+    
+    <!-- Google AdSense (Deferred/Async) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1769304139145025"
+     crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    
+    <!-- Fonts with display=swap for performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['Merriweather', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                50: '#fffbeb',
+                100: '#fef3c7',
+                200: '#fde68a',
+                300: '#fcd34d',
+                400: '#fbbf24',
+                500: '#f59e0b', // Amber/Gold primary
+                600: '#d97706',
+                700: '#b45309',
+                800: '#92400e',
+                900: '#78350f',
+                950: '#451a03',
+              },
+              skin: {
+                base: 'var(--bg-primary)',
+                secondary: 'var(--bg-secondary)',
+                tertiary: 'var(--bg-tertiary)',
+                text: 'var(--text-primary)',
+                muted: 'var(--text-secondary)',
+                border: 'var(--border-color)',
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'loading': 'loading 1.5s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+              loading: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(100%)' } }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* CRITICAL CSS & THEME VARIABLES */
+      /* Default Dark */
+      :root[data-theme="dark"] { --bg-primary: #141414; --bg-secondary: #1f1f1f; --bg-tertiary: #2f2f2f; --text-primary: #e5e5e5; --text-secondary: #a3a3a3; --border-color: #404040; }
+      /* Light */
+      :root[data-theme="light"] { --bg-primary: #ffffff; --bg-secondary: #f3f4f6; --bg-tertiary: #e5e7eb; --text-primary: #111827; --text-secondary: #4b5563; --border-color: #e5e7eb; }
+      /* iabooks Gold (Dark Warm) */
+      :root[data-theme="iabooks"] { --bg-primary: #1c1305; --bg-secondary: #2e1d05; --bg-tertiary: #452b05; --text-primary: #fffbeb; --text-secondary: #fde68a; --border-color: #78350f; }
+      
+      /* NEW THEMES */
+      :root[data-theme="wood"] { --bg-primary: #2d1b0e; --bg-secondary: #452918; --bg-tertiary: #5d3a24; --text-primary: #f5e6d3; --text-secondary: #d4c5b0; --border-color: #8b5e3c; }
+      :root[data-theme="water"] { --bg-primary: #f0f9ff; --bg-secondary: #e0f2fe; --bg-tertiary: #bae6fd; --text-primary: #0c4a6e; --text-secondary: #0284c7; --border-color: #7dd3fc; }
+      :root[data-theme="forest"] { --bg-primary: #022c22; --bg-secondary: #064e3b; --bg-tertiary: #065f46; --text-primary: #ecfdf5; --text-secondary: #6ee7b7; --border-color: #047857; }
+      :root[data-theme="ocean"] { --bg-primary: #083344; --bg-secondary: #164e63; --bg-tertiary: #155e75; --text-primary: #cffafe; --text-secondary: #67e8f9; --border-color: #0891b2; }
+      :root[data-theme="universe"] { --bg-primary: #0f0726; --bg-secondary: #240a4a; --bg-tertiary: #3b0764; --text-primary: #f3e8ff; --text-secondary: #d8b4fe; --border-color: #7e22ce; }
+
+
+      body { background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.5s ease, color 0.5s ease; }
+      
+      /* CLS Optimization: Min heights */
+      .book-card { min-height: 300px; contain: content; }
+      img { content-visibility: auto; }
+
+      /* Loader Styles */
+      .loader-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
+      .globe { width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(245, 158, 11, 0.2); box-shadow: 0 0 50px rgba(245,158,11,0.1); animation: rotate 20s linear infinite; }
+      .orbit-light { width: 10px; height: 10px; background: #f59e0b; border-radius: 50%; box-shadow: 0 0 20px #f59e0b; animation: orbit 2s linear infinite; }
+      @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      @keyframes orbit { 0% { transform: translateX(100px) rotate(0deg); } 100% { transform: translateX(100px) rotate(360deg); } }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+        "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.10.1",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
+        "react/": "https://aistudiocdn.com/react@^19.2.1/",
+        "react": "https://aistudiocdn.com/react@^19.2.1"
+      }
+    }
+    </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="font-sans antialiased">
+    <div id="root">
+        <div class="loader-container">
+            <div class="globe flex items-center justify-center">
+                 <div class="orbit-light"></div>
+            </div>
+            <h1 style="color: #f59e0b; font-family: sans-serif; margin-top: 2rem; letter-spacing: 2px;">IABOOKS</h1>
+        </div>
+    </div>
+    <script type="module" src="./index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW fail', err));
+        });
+      }
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

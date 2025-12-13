@@ -1,0 +1,59 @@
+<?php
+// Permite acesso de qualquer origem (CORS)
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Se for uma requisição OPTIONS (pre-flight), encerra aqui
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// Configurações
+$uploadDir = 'ebooks/'; // Pasta onde os JSONs serão salvos
+
+// Cria a pasta se não existir
+if (!is_dir($uploadDir)) {
+    if (!mkdir($uploadDir, 0755, true)) {
+        http_response_code(500);
+        echo "Erro: Não foi possível criar o diretório 'ebooks'. Verifique as permissões da pasta.";
+        exit;
+    }
+}
+
+// Recebe o JSON do corpo da requisição
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+// Validação básica
+if (!$data) {
+    http_response_code(400);
+    echo "Erro: JSON inválido ou vazio.";
+    exit;
+}
+
+if (!isset($data['id']) || !isset($data['title'])) {
+    http_response_code(400);
+    echo "Erro: Dados do livro incompletos (ID ou Título faltando).";
+    exit;
+}
+
+// Sanitiza o título para ser usado no nome do arquivo
+// Remove caracteres especiais, espaços, acentos, etc.
+$safeTitle = preg_replace('/[^a-zA-Z0-9_-]/', '_', $data['title']);
+// Limita o tamanho do nome do arquivo
+$safeTitle = substr($safeTitle, 0, 50);
+
+// Cria o nome do arquivo: Titulo_ID.json
+$filename = $uploadDir . $safeTitle . '_' . $data['id'] . '.json';
+
+// Tenta salvar o arquivo
+if (file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+    http_response_code(200);
+    echo "Sucesso: Livro salvo em " . $filename;
+} else {
+    http_response_code(500);
+    echo "Erro: Falha ao escrever o arquivo no servidor. Verifique permissões de escrita na pasta 'ebooks'.";
+}
+?>

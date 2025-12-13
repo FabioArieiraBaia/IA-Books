@@ -1,0 +1,58 @@
+<?php
+// RENAME THIS FILE TO: sitemap.php
+
+header("Content-Type: application/xml; charset=utf-8");
+
+$dir = 'ebooks/';
+$baseUrl = 'https://iabooks.com.br/';
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+// 1. Static Pages
+$staticPages = [
+    '',
+    '#/create',
+    '#/community',
+    '#/terms',
+    '#/privacy'
+];
+
+foreach ($staticPages as $page) {
+    echo '<url>';
+    echo '<loc>' . $baseUrl . $page . '</loc>';
+    echo '<changefreq>daily</changefreq>';
+    echo '<priority>0.8</priority>';
+    echo '</url>';
+}
+
+// 2. Dynamic Books
+if (is_dir($dir)) {
+    $files = glob($dir . '*.json');
+    
+    // Sort by newest first
+    usort($files, function($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+
+    foreach ($files as $file) {
+        $content = file_get_contents($file);
+        if ($content !== false) {
+            $book = json_decode($content, true);
+            if ($book && isset($book['id'])) {
+                $lastMod = date('Y-m-d', filemtime($file));
+                
+                echo '<url>';
+                // Note: HashRouter URL format
+                echo '<loc>' . $baseUrl . '#/read/' . $book['id'] . '</loc>';
+                echo '<lastmod>' . $lastMod . '</lastmod>';
+                echo '<changefreq>monthly</changefreq>';
+                echo '<priority>0.6</priority>';
+                echo '</url>';
+            }
+        }
+    }
+}
+
+echo '</urlset>';
+?>
