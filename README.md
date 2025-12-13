@@ -10,6 +10,8 @@ O **IA-Books** é uma plataforma inovadora que permite aos usuários criar, ler 
 
 A aplicação utiliza a API do Google Gemini para planejar, escrever e gerar ativos (como prompts de imagem) para os livros, oferecendo uma experiência completa de autoria assistida por IA.
 
+**Acesse a aplicação em produção:** [iabooks.com.br](https://iabooks.com.br)
+
 ## ✨ Funcionalidades Principais
 
 - **Criação de Livros por IA:** Geração de livros em três formatos (`apostila`, `ebook`, `livro`) com planejamento de capítulos, escrita de conteúdo e sugestão de imagens de capa/capítulos
@@ -189,21 +191,46 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir _issues_ ou envi
 
 Este projeto está licenciado sob a Licença MIT.
 
-## 👨‍💻 Desenvolvedor
+## 👨‍💻 Desenvolvedor e Créditos
 
-**Fábio Arieira**  
-Desenvolvedor Full Stack
+### Desenvolvido por Fábio Arieira
 
-- Website: [fabioarieira.com](https://fabioarieira.com)
-- GitHub: [@FabioArieiraBaia](https://github.com/FabioArieiraBaia)
+**Fábio Arieira** - Desenvolvedor Full Stack
+
+Este projeto foi completamente desenvolvido, arquitetado e implementado por **Fábio Arieira**, um desenvolvedor Full Stack especializado em aplicações web modernas e seguras.
+
+- 🌐 **Website:** [fabioarieira.com](https://fabioarieira.com)
+- 💻 **GitHub:** [@FabioArieiraBaia](https://github.com/FabioArieiraBaia)
+- 📚 **Aplicação:** [iabooks.com.br](https://iabooks.com.br)
+
+**Todos os direitos e créditos desta aplicação pertencem a Fábio Arieira.**
+
+## 🙏 Agradecimentos
+
+### Pollinations
+
+Gostaríamos de expressar nossa profunda gratidão à **[Pollinations](https://pollinations.ai)** por disponibilizar gratuitamente sua API de geração de imagens. A generosidade da Pollinations em oferecer acesso gratuito à sua tecnologia de IA foi fundamental para tornar o projeto **IA-Books** possível.
+
+A API da Pollinations permite que o IA-Books gere imagens de capa e ilustrações para os livros criados, enriquecendo significativamente a experiência dos usuários. Sem essa contribuição, muitas das funcionalidades visuais do projeto não seriam viáveis.
+
+**Obrigado, Pollinations, por tornar a criação de conteúdo visual acessível a todos!** 🎨✨
 
 ## 🔗 Links Úteis
 
 - [Google Gemini API](https://ai.google.dev/)
+- [Pollinations AI](https://pollinations.ai) - API gratuita de geração de imagens
 - [React Documentation](https://react.dev/)
 - [Vite Documentation](https://vitejs.dev/)
 - [TypeScript Documentation](https://www.typescriptlang.org/)
 
 ---
 
-_Desenvolvido com ❤️ por **Fábio Arieira**_
+<div align="center">
+
+**Desenvolvido com ❤️ por [Fábio Arieira](https://fabioarieira.com)**
+
+**Acesse a aplicação:** [iabooks.com.br](https://iabooks.com.br)
+
+**© 2025 Fábio Arieira - Todos os direitos reservados**
+
+</div>
