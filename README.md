@@ -201,6 +201,7 @@ Este projeto foi completamente desenvolvido, arquitetado e implementado por **F�
 
 - 🌐 **Website:** [fabioarieira.com](https://fabioarieira.com)
 - 💻 **GitHub:** [@FabioArieiraBaia](https://github.com/FabioArieiraBaia)
+- 🎮 **Discord:** `fabioarieira8850`
 - 📚 **Aplicação:** [iabooks.com.br](https://iabooks.com.br)
 
 **Todos os direitos e créditos desta aplicação pertencem a Fábio Arieira.**
